@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 /** In dev, use Vite proxy (same origin). In prod, set VITE_API_URL to your API host. */
-export const API_BASE =
-  import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? '' : 'http://localhost:8000');
+export const API_BASE = import.meta.env.VITE_API_URL
 
 export const api = axios.create({
   baseURL: `${API_BASE}/api`,
