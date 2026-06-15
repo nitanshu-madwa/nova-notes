@@ -28,6 +28,19 @@ app = FastAPI(
     openapi_url="/api/openapi.json"
 )
 
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://nova-notes-omega.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # ── Middleware ──────────────────────────────────────────────────────────────
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
