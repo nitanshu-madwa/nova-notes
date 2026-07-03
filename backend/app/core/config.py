@@ -26,6 +26,14 @@ class Settings(BaseSettings):
         "https://nova-notes-omega.vercel.app",
         "https://www.nova-notes-omega.vercel.app",
     ]
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Allow CORS_ORIGINS to be overridden via environment variable
+        cors_env = os.getenv("CORS_ORIGINS")
+        if cors_env:
+            # Split comma-separated origins
+            self.CORS_ORIGINS = [origin.strip() for origin in cors_env.split(",")]
 
     # ── Supabase ─────────────────────────────────────────────────────────────
     SUPABASE_URL: str = ""

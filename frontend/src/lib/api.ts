@@ -1,7 +1,23 @@
 import axios from 'axios';
 
-/** In dev, use Vite proxy (same origin). In prod, set VITE_API_URL to your API host. */
-export const API_BASE = import.meta.env.VITE_API_URL || ''
+/** 
+ * API_BASE URL configuration:
+ * - Dev (serve): Empty string to use Vite proxy
+ * - Prod (build): VITE_API_URL env var or default to Render backend
+ */
+const getApiBase = () => {
+  // Check if we're in production (window.location has the deployed domain)
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isDev) {
+    return ''; // Use same origin (Vite proxy)
+  }
+  
+  // In production, try to use env var, fallback to Render backend
+  return import.meta.env.VITE_API_URL || 'https://nova-notes-1.onrender.com';
+};
+
+export const API_BASE = getApiBase();
 
 export const api = axios.create({
   baseURL: `${API_BASE}/api`,
