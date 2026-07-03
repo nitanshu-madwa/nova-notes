@@ -136,10 +136,18 @@ async def sign_up(payload: SignUpRequest, supabase: Client = Depends(get_supabas
         if payload.full_name:
             user_metadata["full_name"] = payload.full_name
 
+        # Determine the redirect URL based on environment
+        redirect_url = settings.FRONTEND_URL
+        if settings.DEBUG:
+            redirect_url = settings.FRONTEND_URL_LOCALHOST
+
         response = supabase.auth.sign_up({
             "email": payload.email,
             "password": payload.password,
-            "options": {"data": user_metadata},
+            "options": {
+                "data": user_metadata,
+                "redirect_to": f"{redirect_url}/auth/callback",
+            },
         })
         return _signup_result_from_auth(response)
 

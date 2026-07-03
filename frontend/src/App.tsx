@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { useAppStore } from '@/store';
 import { AuthPage } from '@/pages/AuthPage';
+import { AuthCallbackPage } from '@/pages/AuthCallbackPage';
 import { AppShell } from '@/components/layout/AppShell';
 import { AuthBootstrap } from '@/components/auth/AuthBootstrap';
 
@@ -33,6 +34,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<AuthPage />} />
+            <Route path="/auth/callback" element={<AuthCallbackPage />} />
             <Route
               path="/*"
               element={

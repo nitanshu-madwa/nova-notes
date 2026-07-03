@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     # Support environment variable override for CORS origins
     CORS_ORIGINS_STR: Optional[str] = None
     
+    # ── Frontend URLs ────────────────────────────────────────────────────────
+    FRONTEND_URL: str = "https://nova-notes-omega.vercel.app"
+    FRONTEND_URL_LOCALHOST: str = "http://localhost:5173"
+    
     @property
     def CORS_ORIGINS(self) -> List[str]:
         # If env var is set, use it
