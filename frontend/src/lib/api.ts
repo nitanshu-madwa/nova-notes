@@ -7,6 +7,7 @@ export const api = axios.create({
   baseURL: `${API_BASE}/api`,
   headers: { 'Content-Type': 'application/json' },
   timeout: 30000,
+  withCredentials: true,
 });
 
 // ── Request interceptor: inject auth token ──────────────────────────────────
@@ -28,6 +29,8 @@ api.interceptors.response.use(
         try {
           const { data } = await axios.post(`${API_BASE}/api/auth/refresh`, {
             refresh_token: refresh,
+          }, {
+            withCredentials: true,
           });
           localStorage.setItem('ae_access_token', data.access_token);
           localStorage.setItem('ae_refresh_token', data.refresh_token);
