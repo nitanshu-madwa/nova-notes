@@ -207,13 +207,9 @@ async def sign_in(payload: SignInRequest, supabase: Client = Depends(get_supabas
     except Exception as e:
         logger.error(f"Sign in error: {e}")
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=auth_error_detail(e, "Could not sign in."),
-        ) from e
-        raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=auth_error_detail(e, "Invalid email or password."),
-        )
+        ) from e
 
 
 @router.post("/signout")
