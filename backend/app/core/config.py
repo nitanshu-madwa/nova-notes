@@ -17,23 +17,26 @@ class Settings(BaseSettings):
     AUTH_AUTO_CONFIRM_EMAIL: Optional[bool] = None
 
     # ── CORS ─────────────────────────────────────────────────────────────────
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://localhost:8001",
-        "http://127.0.0.1:8001",
-        "https://nova-notes-omega.vercel.app",
-        "https://www.nova-notes-omega.vercel.app",
-    ]
+    # Support environment variable override for CORS origins
+    CORS_ORIGINS_STR: Optional[str] = None
     
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # Allow CORS_ORIGINS to be overridden via environment variable
-        cors_env = os.getenv("CORS_ORIGINS")
-        if cors_env:
-            # Split comma-separated origins
-            self.CORS_ORIGINS = [origin.strip() for origin in cors_env.split(",")]
+    @property
+    def CORS_ORIGINS(self) -> List[str]:
+        # If env var is set, use it
+        if self.CORS_ORIGINS_STR:
+            return [origin.strip() for origin in self.CORS_ORIGINS_STR.split(",")]
+        
+        # Default hardcoded list for production
+        return [
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:5173",
+            "http://localhost:8001",
+            "http://127.0.0.1:8001",
+            "https://nova-notes-omega.vercel.app",
+            "https://www.nova-notes-omega.vercel.app",
+            "https://nova-notes.vercel.app",
+        ]
 
     # ── Supabase ─────────────────────────────────────────────────────────────
     SUPABASE_URL: str = ""
