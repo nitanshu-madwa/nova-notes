@@ -23,7 +23,8 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
         "http://localhost:8001",
         "http://127.0.0.1:8001",
-        "https://your-frontend-domain.com",
+        "https://nova-notes-omega.vercel.app",
+        "https://www.nova-notes-omega.vercel.app",
     ]
 
     # ── Supabase ─────────────────────────────────────────────────────────────
